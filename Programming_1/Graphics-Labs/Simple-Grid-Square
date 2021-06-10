@@ -1,0 +1,180 @@
+// Author: Param Mehta
+
+import java.util.ArrayList;
+import java.awt.*;
+import java.awt.event.*;
+
+
+public class GraphicsLab06st 
+{
+	public static void main(String args [])
+	{
+		Windows win = new Windows();
+		win.setSize(800,600);
+		win.addWindowListener(new WindowAdapter() {public void
+		windowClosing(WindowEvent e) {System.exit(0);}});
+		win.show();
+	}
+}
+
+
+class Windows extends Frame
+{
+	
+	public void paint (Graphics g)
+	{
+		ArrayList<Shape> shapes = new ArrayList<Shape>();
+		shapes.add(new Square());
+		shapes.add(new Triangle());
+		shapes.add(new Octagon());
+		shapes.add(new Circle());
+		
+		drawGrid(g);
+		
+		for(Shape shape: shapes)
+		{
+			shape.drawShape(g);
+			shape.displayName(g);
+			shape.displayNumSides(g);
+		}
+	}
+	
+	public void drawGrid(Graphics g)
+	{
+		g.drawLine(0, 300, 800, 300);
+		g.drawLine(400, 0, 400, 600);
+	}
+}
+
+//ABSTRACT SHAPE
+
+abstract class AbstractShape implements Shape {
+	protected int numSides;
+	protected String shapeName;
+	protected int titleX;
+	protected int titleY;
+	protected int messageX;
+	protected int messageY;
+	
+	/*public AbstractShape(String shapeName, int numSides, int titleX, int titleY, int messageX, int messageY){
+		this.numSides = numSides;
+		this.shapeName = shapeName;
+		this.titleX = titleX;
+		this.titleY = titleY;
+		this.messageX = messageX;
+		this.messageY = messageY;
+	}*/
+	public void displayName(Graphics g)
+	{
+		g.drawString(shapeName, titleX, titleY);
+	}
+	public void displayNumSides(Graphics g) 
+	{
+		g.drawString("A " + shapeName + " has " + numSides + " sides", messageX, messageY);
+	}
+}
+
+
+// interface SHAPE
+
+
+interface Shape {
+
+	public abstract void drawShape(Graphics g);
+	public abstract void displayName(Graphics g);
+	public abstract void displayNumSides(Graphics g);
+	
+}
+
+
+//SQUARE
+
+class Square extends AbstractShape {
+	
+	 Square(){
+		//super(shapeName,numSides,titleX,titleY,messageX,messageY);
+		numSides = 4;
+		shapeName = "Square";
+		titleX = 25;
+		titleY = 50;
+		messageX = 100;
+		messageY = 250;
+	}
+
+	
+	public void drawShape(Graphics g) {
+		g.fillRect(100, 100, 120, 120);
+	}
+
+}
+
+//TRIANGLE
+
+class Triangle extends AbstractShape {
+
+	 Triangle(){
+		//super(shapeName,numSides,titleX,titleY,messageX,messageY);
+		numSides = 3;
+		shapeName = "Triangle";
+		titleX = 425;
+		titleY = 50;
+		messageX = 525;
+		messageY = 250;
+	}
+	
+	public void drawShape(Graphics g) {
+		Polygon t = new Polygon();
+		t.addPoint(475, 225);
+		t.addPoint(575, 65);
+		t.addPoint(675, 225);
+		t.addPoint(475, 225);
+		g.fillPolygon(t);
+	}
+
+
+}
+
+
+//OCTOAGON
+
+ class Octagon extends AbstractShape {
+
+	 Octagon(){
+		//super(shapeName,numSides,titleX,titleY,messageX,messageY);
+		numSides = 8;
+		shapeName = "Octogon";
+		titleX = 25;
+		titleY = 325;
+		messageX = 125;
+		messageY = 575;
+	}
+	
+	public void drawShape(Graphics g) {
+		Polygon o = new Polygon();
+		o.addPoint(150, 375);
+		o.addPoint(225, 375);
+		o.addPoint(275, 425);
+		o.addPoint(275, 500);
+		o.addPoint(225, 550);
+		o.addPoint(150, 550);
+		o.addPoint(100, 500);
+		o.addPoint(100, 425);
+		o.addPoint(150, 375);
+		g.fillPolygon(o);
+	}
+	
+}
+ 
+ //CIRCLE
+ 
+ class Circle extends AbstractShape {
+ 
+	Circle(){
+		//super(shapeName,numSides,titleX,titleY,messageX,messageY);
+		numSides = 0;
+		shapeName = "Circle";
+		titleX = 425;
+		titleY = 325;
+		messageX = 550;
+		messageY = 550;
+	}
